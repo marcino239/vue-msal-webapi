@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import App from './App.vue'
 import { MsalPlugin } from './lib/msalPlugin'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 
@@ -18,6 +17,8 @@ Vue.use(MsalPlugin, {
 })
 
 Vue.config.productionTip = false
+
+import App from '@/App.vue'
 
 new Vue({
   render: h => h(App),
