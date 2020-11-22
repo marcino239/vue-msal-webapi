@@ -30,7 +30,7 @@ namespace cs_aad
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMicrosoftIdentityWebApiAuthentication(Configuration);
-
+            services.AddCors();
             services.AddControllers();
         }
 
@@ -43,7 +43,12 @@ namespace cs_aad
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // global cors policy
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
 
             app.UseRouting();
 
