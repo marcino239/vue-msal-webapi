@@ -1,6 +1,6 @@
 import Vue from 'vue/types'
 import * as msal from '@azure/msal-browser'
-import { InteractionRequiredAuthError} from '@azure/msal-common'
+import { InteractionRequiredAuthError } from '@azure/msal-common'
 
 let msalInstance = null
 
@@ -23,6 +23,10 @@ class MsalHelper extends msal.PublicClientApplication {
             .catch(error => console.log(error))
     }
 
+    login(scopes: Array<string>) : Promise<msal.AuthenticationResult> {
+        return this.loginPopup({ scopes })
+    } 
+
     async getSilentToken(account: any, scopes = ["User.Read"]) {
         const silentRequest = { account, scopes }
         return await this.acquireTokenSilent(silentRequest).catch(error => {
@@ -36,5 +40,5 @@ class MsalHelper extends msal.PublicClientApplication {
 }
 
 export function MsalPlugin(vue: typeof Vue, options?: msal.Configuration): void {
-    vue.prototype.$msal = new MsalHelper(options)
+    vue.prototype.$msal = new MsalHelper(options || {} )
 }
